@@ -2,6 +2,7 @@ package com.kedar.taskmanager.controller;
 
 import com.kedar.taskmanager.dto.TaskRequest;
 import com.kedar.taskmanager.dto.TaskResponse;
+import com.kedar.taskmanager.model.Task;
 import com.kedar.taskmanager.service.TaskService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,11 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TaskResponse>> getAllTasks() {
+    public ResponseEntity<List<TaskResponse>> getAllTasks(
+            @RequestParam(required = false) Task.Status status,
+            @RequestParam(required = false) Task.Priority priority) {
+        if (status != null) return ResponseEntity.ok(taskService.getTasksByStatus(status));
+        if (priority != null) return ResponseEntity.ok(taskService.getTasksByPriority(priority));
         return ResponseEntity.ok(taskService.getAllTasks());
     }
 

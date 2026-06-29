@@ -2,6 +2,7 @@ package com.kedar.taskmanager.service;
 
 import com.kedar.taskmanager.dto.TaskRequest;
 import com.kedar.taskmanager.dto.TaskResponse;
+import com.kedar.taskmanager.exception.ResourceNotFoundException;
 import com.kedar.taskmanager.model.Task;
 import com.kedar.taskmanager.model.User;
 import com.kedar.taskmanager.repository.TaskRepository;
@@ -57,8 +58,23 @@ public class TaskService {
                 .collect(Collectors.toList());
     }
 
+    public List<TaskResponse> getTasksByStatus(Task.Status status) {
+        return taskRepository.findByUserAndStatus(getCurrentUser(), status)
+                .stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
+    }
+
+    public List<TaskResponse> getTasksByPriority(Task.Priority priority) {
+        return taskRepository.findByUserAndPriority(getCurrentUser(), priority)
+                .stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
+    }
+
     public TaskResponse updateTask(Long id, TaskRequest request) {
-        Task task = taskRepository.findById(id).orElseThrow();
+        Task task = taskRepository.findByIdAndUser(id, getCurrentUser())
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found or access denied"));
         task.setTitle(request.getTitle());
         task.setDescription(request.getDescription());
         if (request.getStatus() != null)
@@ -71,6 +87,8 @@ public class TaskService {
     }
 
     public void deleteTask(Long id) {
-        taskRepository.deleteById(id);
+        Task task = taskRepository.findByIdAndUser(id, getCurrentUser())
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found or access denied"));
+        taskRepository.delete(task);
     }
 }
