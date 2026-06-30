@@ -21,7 +21,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: root@123
       JWT_SECRET: your-super-secret-key-that-is-at-least-32-characters-long
       JWT_EXPIRATION: 86400000
-      GEMINI_API_KEY: your-gemini-api-key-here
+      GEMINI_API_KEY: AQ.Ab8RN6ICf3sl5IB8QYsOHEYg78uOvoT5baGQDetsJ-MTG5kBww
       GEMINI_API_URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     depends_on:
       - mysql
