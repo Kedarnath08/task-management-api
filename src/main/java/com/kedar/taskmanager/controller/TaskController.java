@@ -1,5 +1,6 @@
 package com.kedar.taskmanager.controller;
 
+import com.kedar.taskmanager.dto.SmartTaskRequest;
 import com.kedar.taskmanager.dto.TaskRequest;
 import com.kedar.taskmanager.dto.TaskResponse;
 import com.kedar.taskmanager.model.Task;
@@ -27,9 +28,21 @@ public class TaskController {
     public ResponseEntity<List<TaskResponse>> getAllTasks(
             @RequestParam(required = false) Task.Status status,
             @RequestParam(required = false) Task.Priority priority) {
-        if (status != null) return ResponseEntity.ok(taskService.getTasksByStatus(status));
-        if (priority != null) return ResponseEntity.ok(taskService.getTasksByPriority(priority));
+        if (status != null)
+            return ResponseEntity.ok(taskService.getTasksByStatus(status));
+        if (priority != null)
+            return ResponseEntity.ok(taskService.getTasksByPriority(priority));
         return ResponseEntity.ok(taskService.getAllTasks());
+    }
+
+    @GetMapping("/summary")
+    public ResponseEntity<String> getTaskSummary() {
+        return ResponseEntity.ok(taskService.getTaskSummary());
+    }
+
+    @PostMapping("/smart-create")
+    public ResponseEntity<TaskResponse> smartCreateTask(@Valid @RequestBody SmartTaskRequest request) {
+        return ResponseEntity.ok(taskService.smartCreateTask(request.getText()));
     }
 
     @PutMapping("/{id}")
