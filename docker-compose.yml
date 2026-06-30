@@ -3,7 +3,7 @@ services:
     image: mysql:8.0
     container_name: taskmanager-mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root@123
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: taskmanager
     ports:
       - "3307:3306"
@@ -18,13 +18,16 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/taskmanager
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root@123
-      JWT_SECRET: your-super-secret-key-that-is-at-least-32-characters-long
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: true
+      JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRATION: 86400000
-      GEMINI_API_KEY: AQ.Ab8RN6ICf3sl5IB8QYsOHEYg78uOvoT5baGQDetsJ-MTG5kBww
-      GEMINI_API_URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      GEMINI_API_URL: ${GEMINI_API_URL}
     depends_on:
       - mysql
+    restart: on-failure
 
 volumes:
   mysql-data:
