@@ -35,3 +35,4 @@ build/
 src/main/resources/application.properties
 context_files/
 .env
+docker-compose.yml
