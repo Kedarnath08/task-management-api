@@ -2,6 +2,10 @@
 
 A production-style REST API built with Java and Spring Boot. Supports user authentication with JWT, full task CRUD with ownership enforcement, filtering by status and priority, and Gemini AI integration for smart task creation and summaries.
 
+> **This is a REST API — use Postman or any HTTP client to interact with it.**
+>
+> **Live deployment:** https://task-management-api-3sr8.onrender.com
+
 ---
 
 ## Tech Stack
