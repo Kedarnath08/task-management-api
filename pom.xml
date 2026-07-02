@@ -11,8 +11,8 @@
 	<groupId>com.kedar</groupId>
 	<artifactId>taskmanager</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name/>
-	<description/>
+	<name>taskmanager</name>
+	<description>Task Management REST API with JWT auth, MySQL, Gemini AI integration, and Docker support</description>
 	<url/>
 	<licenses>
 		<license/>
